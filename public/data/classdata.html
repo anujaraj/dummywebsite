@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Class update</h1>
+
+Class <input type="text" id="class"><br><br>
+
+Teacher <input type="text" id="teacher" ><br><br>
+Syllabus <input type="text" id="syllabus" ><br><br>
+Strength <input type="text" id="strength"><br><br>
+<button id="insert">INSERT</button>
+<button id="delete">DELETE</button>
+<button id="update">UPDATE</button>
+<button id="select">SELECT</button>
+
+<!-- <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js"></script> -->
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+    import { getDatabase, ref,get, set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyDAXjcLaAZZ9E8V_tJNNq8eD2061Pn2LIA",
+        authDomain: "tbtggic.firebaseapp.com",
+        projectId: "tbtggic",
+        storageBucket: "tbtggic.appspot.com",
+        messagingSenderId: "695159350388",
+        appId: "1:695159350388:web:c22eaeed51d0b4e5761d21",
+        measurementId: "G-5S07RBNLXJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+   
+   
+    
+    //INSERT
+    
+
+    
+    const db = getDatabase();
+    
+    var classs=document.getElementById("class");
+    var teacher=document.getElementById("teacher");
+    var syllabus=document.getElementById("syllabus");
+    var strength=document.getElementById("strength");
+    var insertbtn=document.getElementById("insert");
+    var removebtn=document.getElementById("delete");
+    var updatebtn=document.getElementById("update");
+    var selectbtn=document.getElementById("select");
+    
+    
+    function writeUserData() {
+        set(ref(db, "Classinfo/"+ classs.value),{    
+            Class: classs.value,
+            Teacher: teacher.value,
+            Syllabus: syllabus.value,
+            Strength: strength.value
+        })
+        .then(()=>{
+            alert("data added")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function selectData(){
+        const dbref = ref(db);
+
+        get(child(dbref,"Classinfo/"+classs.value)).then((snapshot)=>{
+            if(snapshot.exists()){
+                
+                teacher.value=snapshot.val().Teacher;
+                syllabus.value=snapshot.val().Syllabus;
+                strength.value=snapshot.val().Strength;
+            }
+            else{
+                alert("data not found")
+            }
+
+        })
+        .catch((error)=>{
+            alert=("unsuccessful,erro"+error)
+        })
+    }
+    function updateData() {
+        set(ref(db, "Classinfo/"+ classs.value),{    
+            
+            Teacher: teacher.value,
+            Syllabus: syllabus.value,
+            Strength: strength.value
+        })
+        .then(()=>{
+            alert("data updated")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function removeData() {
+        remove(ref(db, "Classinfo/"+ classs.value))
+        .then(()=>{
+            alert("data removed")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    //assign events
+    insertbtn.addEventListener('click',writeUserData);
+    selectbtn.addEventListener('click',selectData);
+    updatebtn.addEventListener('click',updateData);
+    removebtn.addEventListener('click',removeData);
+
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <style>
+        body{padding:10px}
+        button{
+            border-radius: 15px;
+            background-color: #FFB7B2;
+            color:white;
+            margin:2px;
+        }
+        .top{
+            background-color:black;
+            height:12%px;
+            color:white;
+            font-family: Calibri;
+            font-weight: bold;
+            font-size:3vw;
+            text-align: center;
+            font-style:inherit;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            border-radius: 25px;
+            width:80%;
+            margin-left: 10%;
+            margin-left: 10%;
+            margin-bottom:2%;
+            margin-top:2%;
+            padding-top:1%
+            }
+        .head{
+            background-color:#FFB7B2;
+            height:15%;
+            color:white;
+            font-family: fantasy;
+            font-weight: bold;
+            font-size:4vw;
+            text-align: center;
+            font-style:inherit;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            border-radius: 25px;
+            width:80%;
+            margin-left: 10%;
+            
+            margin-bottom:2%;
+            margin-top:2%;
+            padding-top:1%
+            }
+            .subtop{
+                
+            height:30%;
+            color:white;
+            font-family: Calibri;
+            
+            font-size:2vw;
+            text-align: center;
+            font-style:inherit;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            border-radius: 25px;
+            width:80%;
+            margin-left: 10%;
+                
+            }
+            #logout{
+                width:50%;
+                margin-left:25%;
+                height:70px;
+                background-color: black;
+            }
+    </style>
+<body>
+    <div class="head">
+        Admin Panel
+    
+    
+    </div>
+
+<div class="top">Class Updates/कक्षा अपडेट</div>
+<br><br>
+<br><br>
+<div class="subtop">
+Class-Section <input type="text" id="class"><br><br>
+Teacher <input type="text" id="teacher" ><br><br>
+Syllabus <input type="text" id="syllabus" ><br><br>
+Strength <input type="text" id="strength"><br><br>
+<button id="insert">INSERT</button>
+<button id="delete">DELETE</button>
+<button id="update">UPDATE</button>
+<button id="select">SELECT</button>
+<br><br>
+<br><br>
+</div>
+
+<div class="top">Staff Updates/स्टाफ अपडेट</div>
+<br><br>
+<br><br>
+
+<div class="subtop">
+    <label for="identify">Choose :</label>
+<select  id="identity">
+  <option value="Mr">Mr</option>
+  <option value="Mrs">Mrs</option>
+  <option value="Miss">Miss</option>
+  <option value="Ms">Ms</option>
+</select>
+<br><br>
+NAME <input type="text" id="name"><br><br>
+<label for="type">Choose a profession type:</label>
+<select  id="type">
+  <option value="teacher">Teacher</option>
+  <option value="clerical office staff">Clerical</option>
+  <option value="other">Other</option>
+  <option value="Principal's Office">The Principal</option>
+</select>
+<br><br>
+<button id="insert1">INSERT</button>
+<button id="delete1">DELETE</button>
+<button id="update1">UPDATE</button>
+<button id="select1">SELECT</button>
+<br><br>
+<br><br>
+</div>
+
+
+<div class="top">Principal Updates/प्रिंसिपल अपडेट</div>
+<br><br>
+<br><br>
+
+<div class="subtop">
+    <label for="identify">Choose :</label>
+<select  id="identity1">
+  <option value="Mr">Mr</option>
+  <option value="Mrs">Mrs</option>
+  <option value="Miss">Miss</option>
+  <option value="Ms">Ms</option>
+</select>
+<br><br>
+NAME <input type="text" id="name1"><br><br>
+
+
+Tenure <input type="text" id="tenure" pattern="[A-Za-z0-9-,]"><br><br>
+
+ 
+<button id="insert2">INSERT</button>
+<button id="delete2">DELETE</button>
+<button id="update2">UPDATE</button>
+<button id="select2">SELECT</button>
+<br><br>
+<br><br>
+</div>
+
+
+
+<div class="top">Calender And Events/कैलेंडर अपडेट</div>
+<br><br>
+<br><br>
+
+<div class="subtop">
+    Date <input type="text" id="date"><br><br>
+Month Number <input type="number" id="month"><br><br>
+Event <input type="text" id="event" ><br><br>
+
+<button id="insert3">INSERT</button>
+<button id="delete3">DELETE</button>
+<button id="update3">UPDATE</button>
+<button id="select3">SELECT</button>
+<br><br>
+<br><br>
+</div>
+
+
+
+<button id="logout" >LOGOUT</button>
+
+<!-- <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js"></script> -->
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+    import { getAuth, signOut} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
+    import { getDatabase, ref,get, set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyDAXjcLaAZZ9E8V_tJNNq8eD2061Pn2LIA",
+        authDomain: "tbtggic.firebaseapp.com",
+        projectId: "tbtggic",
+        storageBucket: "tbtggic.appspot.com ",
+        messagingSenderId: "695159350388",
+        appId: "1:695159350388:web:c22eaeed51d0b4e5761d21",
+        measurementId: "G-5S07RBNLXJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    const db = getDatabase();
+    const storage = getStorage();
+    
+    //INSERT
+    
+    
+    var classs=document.getElementById("class");
+    
+    var teacher=document.getElementById("teacher");
+    var syllabus=document.getElementById("syllabus");
+    var strength=document.getElementById("strength");
+    var insertbtn=document.getElementById("insert");
+    var removebtn=document.getElementById("delete");
+    var updatebtn=document.getElementById("update");
+    var selectbtn=document.getElementById("select");
+    var logoutbtn=document.getElementById("logout");
+
+    var name=document.getElementById("name");
+    var type=document.getElementById("type");
+    var identity=document.getElementById("identity");
+    var insertbtn1=document.getElementById("insert1");
+    var removebtn1=document.getElementById("delete1");
+    var updatebtn1=document.getElementById("update1");
+    var selectbtn1=document.getElementById("select1");
+
+    var name1=document.getElementById("name1");
+    var tenure=document.getElementById("tenure");
+    var identity1=document.getElementById("identity1");
+    var insertbtn2=document.getElementById("insert2");
+    var removebtn2=document.getElementById("delete2");
+    var updatebtn2=document.getElementById("update2");
+    var selectbtn2=document.getElementById("select2");
+
+    var month=document.getElementById("month");
+    var date=document.getElementById("date");
+    var event=document.getElementById("event");
+    var insertbtn3=document.getElementById("insert3");
+    var removebtn3=document.getElementById("delete3");
+    var updatebtn3=document.getElementById("update3");
+    var selectbtn3=document.getElementById("select3");
+
+    
+//student data
+
+    function writeUserData() {
+        set(ref(db, "Classinfo/"+ classs.value),{    
+            ClassSection: classs.value,
+            Teacher: teacher.value,
+            Syllabus: syllabus.value,
+            Strength: strength.value
+        })
+        .then(()=>{
+            alert("data added")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function selectData(){
+        const dbref = ref(db);
+
+        get(child(dbref,"Classinfo/"+classs.value)).then((snapshot)=>{
+            if(snapshot.exists()){
+                
+                teacher.value=snapshot.val().Teacher;
+                syllabus.value=snapshot.val().Syllabus;
+                strength.value=snapshot.val().Strength;
+            }
+            else{
+                alert("data not found")
+            }
+
+        })
+        .catch((error)=>{
+            alert=("unsuccessful,erro"+error)
+        })
+    }
+    function updateData() {
+        set(ref(db, "Classinfo/"+ classs.value),{    
+            
+            Teacher: teacher.value,
+            Syllabus: syllabus.value,
+            Strength: strength.value
+        })
+        .then(()=>{
+            alert("data updated")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function removeData() {
+        remove(ref(db, "Classinfo/"+ classs.value))
+        .then(()=>{
+            alert("data removed")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+
+    function logOut(){
+        signOut(auth).then(() => {
+            location.replace("authen.html")
+        // Sign-out successful.
+        }).catch((error) => {
+        // An error happened.
+        });
+
+    }
+    //assign events
+    insertbtn.addEventListener('click',writeUserData);
+    selectbtn.addEventListener('click',selectData);
+    updatebtn.addEventListener('click',updateData);
+    removebtn.addEventListener('click',removeData);
+
+//staff data
+function writeUserData1() {
+        set(ref(db, "Staffinfo/"+ name.value),{    
+            Names: name.value,
+            Type:type.value,
+            Identity:identity.value
+        })
+        .then(()=>{
+            alert("data added")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function selectData1(){
+        const dbref = ref(db);
+
+        get(child(dbref,"Staffinfo/"+name.value)).then((snapshot)=>{
+            if(snapshot.exists()){
+                name.value=snapshot.val().Names;
+                type.value=snapshot.val().Type;
+                identity.value=snapshot.val().Identity;
+                
+            }
+            else{
+                alert("data not found")
+            }
+
+        })
+        .catch((error)=>{
+            alert=("unsuccessful,erro"+error)
+        })
+    }
+    function updateData1() {
+        set(ref(db, "Staffinfo/"+ name.value),{    
+            Names:name.value,
+            Type: type.value,
+            Identity:identity.value,
+        })
+        .then(()=>{
+            alert("data updated")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function removeData1() {
+        remove(ref(db, "Staffinfo/"+ name.value))
+        .then(()=>{
+            alert("data removed")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+
+    
+    //assign events
+    insertbtn1.addEventListener('click',writeUserData1);
+    selectbtn1.addEventListener('click',selectData1);
+    updatebtn1.addEventListener('click',updateData1);
+    removebtn1.addEventListener('click',removeData1);
+
+//principal data
+    function writeUserData2() {
+        set(ref(db, "Principalinfo/"+ name1.value),{    
+            Name: name1.value,
+            Tenure: tenure.value,
+            Identity:identity1.value
+        })
+        .then(()=>{
+            alert("data added")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function selectData2(){
+        const dbref = ref(db);
+
+        get(child(dbref,"Principalinfo/"+name1.value)).then((snapshot)=>{
+            if(snapshot.exists()){
+                name1.value=snapshot.val().Name;
+                tenure.value=snapshot.val().Tenure;
+                identity1.value=snapshot.val().Identity;
+                
+            }
+            else{
+                alert("data not found")
+            }
+
+        })
+        .catch((error)=>{
+            alert=("unsuccessful,erro"+error)
+        })
+    }
+    function updateData2() {
+        set(ref(db, "Principalinfo/"+ name1.value),{    
+            Name:name1.value,
+            Tenure:tenure.value,
+            Identity:identity1.value,
+        })
+        .then(()=>{
+            alert("data updated")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function removeData2() {
+        remove(ref(db, "Principalinfo/"+ name1.value))
+        .then(()=>{
+            alert("data removed")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+
+    
+    //assign events
+    insertbtn2.addEventListener('click',writeUserData2);
+    selectbtn2.addEventListener('click',selectData2);
+    updatebtn2.addEventListener('click',updateData2);
+    removebtn2.addEventListener('click',removeData2);
+
+
+
+    //calender
+ 
+function writeUserData3() {
+        set(ref(db, "Calender/"+ date.value),{ 
+            Date:date.value,   
+            Month: month.value,
+            Event:event.value,
+           
+        })
+        .then(()=>{
+            alert("data added")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function selectData3(){
+        const dbref = ref(db);
+
+        get(child(dbref,"Calender/"+date.value)).then((snapshot)=>{
+            if(snapshot.exists()){
+                month.value=snapshot.val().Month;
+                event.value=snapshot.val().Event;
+               
+                
+            }
+            else{
+                alert("data not found")
+            }
+
+        })
+        .catch((error)=>{
+            alert=("unsuccessful,erro"+error)
+        })
+    }
+    function updateData3() {
+        set(ref(db, "Calender/"+ date.value),{    
+            Month:month.value,
+            
+            Event:event.value,
+        })
+        .then(()=>{
+            alert("data updated")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+    function removeData3() {
+        remove(ref(db, "Calender/"+ date.value))
+        .then(()=>{
+            alert("data removed")
+        })
+        .catch(()=>{
+            alert=("unsuccessful,erro"+error)
+        });
+        
+    }
+
+    
+    //assign events
+    insertbtn3.addEventListener('click',writeUserData3);
+    selectbtn3.addEventListener('click',selectData3);
+    updatebtn3.addEventListener('click',updateData3);
+    removebtn3.addEventListener('click',removeData3);
+
+    logoutbtn.addEventListener('click',logOut);
+
+
+  </script>
+
+
+</body>
+</html>

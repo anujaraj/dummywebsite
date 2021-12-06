@@ -1,0 +1,163 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+
+.head{
+ background-color:#FFB7B2;
+ height:15%;
+ color:white;
+ font-family: fantasy;
+ font-weight: bold;
+ font-size:4vw;
+ text-align: center;
+ font-style:inherit;
+ text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ border-radius: 25px;
+ width:80%;
+ margin-left: 10%;
+ margin-bottom:2%;
+ margin-top:2%;
+ padding-top:1%
+}
+.table tbody tr > td {
+  
+  font-family: Calibri;
+  color:white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ 
+}
+.table thead  {
+ 
+  font-family: Calibri;
+  color:white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.table-bordered{
+    border-radius: 25px !important;
+ 
+  
+}
+
+@media (max-width: 600px) {
+  .column{width: 100%;
+    display: block;
+    margin-bottom: 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="head">
+    Class Details/कक्षा विस्तार
+
+
+</div>
+
+<div class="container mt-3">
+    <table class="table table-dark table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Class-Section</th>
+                
+                <th>Teacher</th>
+                <th>Number of Students</th>
+                <th>Syllabus/timetable/exam information</th>
+            </tr>
+            
+            
+        </thead>
+        <tbody id="tbody1"></tbody>
+    </table>
+</div>
+
+<script type="module">
+//filling table
+    var stdno=0;
+    var tbody=document.getElementById("tbody1");
+    function AddItemToTable(classsection,teacher,strength,syllabus){
+        let trow= document.createElement("tr");
+        
+        let td1= document.createElement("td");
+        let td2= document.createElement("td");
+        let td3= document.createElement("td");
+        let td4= document.createElement("td");
+        let td5= document.createElement("td");
+       
+
+        td1.innerHTML=++stdno;
+        td2.innerHTML=classsection;
+        td3.innerHTML=teacher;
+        td4.innerHTML=strength;
+        td5.innerHTML=syllabus;
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+       
+
+        tbody.appendChild(trow);
+
+
+    }
+     // Import the functions you need from the SDKs you need
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+    import { getAuth, signOut} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+    import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
+    import { getDatabase, ref,get,child,onValue} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDAXjcLaAZZ9E8V_tJNNq8eD2061Pn2LIA",
+        authDomain: "tbtggic.firebaseapp.com",
+        projectId: "tbtggic",
+        storageBucket: "tbtggic.appspot.com ",
+        messagingSenderId: "695159350388",
+        appId: "1:695159350388:web:c22eaeed51d0b4e5761d21",
+        measurementId: "G-5S07RBNLXJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase();
+
+
+    function AddAllitem(TheClass){
+        stdno=0;
+        tbody.innerHTML="";
+        TheClass.forEach(element=>{
+            AddItemToTable(element.ClassSection,element.Teacher,element.Strength,element.Syllabus);
+        });
+
+    }
+    //get data from db
+    function GetAllData(){
+        const dbRef=ref(db);
+
+        get(child(dbRef,"Classinfo"))
+        .then((snapshot)=>{
+            var classes=[];
+            
+            snapshot.forEach(childSnapshot=>{
+                classes.push(childSnapshot.val());
+            
+            });
+            AddAllitem(classes);
+        })
+
+    }
+    window.onload=GetAllData;
+</script>
+
+
+ 
+
+</body>
+</html>
