@@ -85,50 +85,100 @@ Welcome to our School Gallery
 
 
 <!-- Photo Grid -->
-<div class="row"> 
-  <div class="column">
-    <img src="./images/img8.jpeg" style="width:100%">
-    <img src="./images/img17.jpeg" style="width:100%">
-    <img src="./images/img1.jpeg" style="width:100%">
-    <img src="./images/img2.jpeg" style="width:100%">
-    <img src="./images/img3.jpeg" style="width:100%">
+<div class="row" id="List"> 
+  <div id='col1' class="column">
     
-    <img src="./images/img5.jpeg" style="width:100%">
-    <img src="./images/img31.jpeg" style="width:100%">
   </div>
-  <div class="column">
-    <img src="./images/img6.jpeg" style="width:100%">
-    <img src="./images/img7.jpeg" style="width:100%">
-    <img src="./images/img9.jpeg" style="width:100%">
-    <img src="./images/img10.jpeg" style="width:100%">
-    <img src="./images/img11.jpeg" style="width:100%">
-    <img src="./images/img27.jpeg" style="width:100%">
-    <img src="./images/img32.jpeg" style="width:100%">
+  <div id='col2' class="column">
+    
   </div>  
-  <div class="column">
-    <img src="./images/img13.jpeg" style="width:100%">
-    <img src="./images/img14.jpeg" style="width:100%">
-    <img src="./images/img15.jpeg" style="width:100%">
-    <img src="./images/img16.jpeg" style="width:100%">
-    <img src="./images/img18.jpeg" style="width:100%">
-    <img src="./images/img19.jpeg" style="width:100%">
-    <img src="./images/img20.jpeg" style="width:100%">
-    <img src="./images/img26.jpeg" style="width:100%">
-    <img src="./images/img25.jpeg" style="width:100%">
-    <img src="./images/img30.jpeg" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="./images/img28.jpeg" style="width:100%">
-    <img src="./images/img21.jpeg" style="width:100%">
-    <img src="./images/img4.jpeg" style="width:100%">
-    <img src="./images/img22.jpeg" style="width:100%">
-    <img src="./images/img23.jpeg" style="width:100%">
-    <img src="./images/img24.jpeg" style="width:100%">
-    <img src="./images/img33.jpeg" style="width:100%">
+  <div id='col3' class="column">
     
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+  import { getAuth, signOut} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+  import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL,list,listAll} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
+  import { getDatabase, ref,get, set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyArEyCIsR5OCwL93pjk-LFvUItRWU90ezU",
+    authDomain: "vue-chat-541ec.firebaseapp.com",
+    projectId: "vue-chat-541ec",
+    storageBucket: "vue-chat-541ec.appspot.com",
+    messagingSenderId: "620716207689",
+    appId: "1:620716207689:web:f943ae4f50f0cb586e5998"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth();
+  const db = getDatabase();
+  
+  
+  var upload=document.getElementById("upload");
+
+    // const storage = getStorage();
+     function print(){
+      console.log('this is happening')
+     }
+     
+       var i=0;
+     async function onCreated(){
+                  // Create a reference under which you want to list
+              const storage = getStorage();
+              const listRef = sRef(storage, 'Images/staffimg');
+             
+        // Find all the prefixes and items.
+        listAll(listRef)
+          .then((res) => {
+          
+            res.prefixes.forEach((folderRef) => {
+              // All the prefixes under listRef.
+              // You may call listAll() recursively on them.
+              
+            });
+            var i=0;
+            res.items.forEach((itemRef) => {
+                i++;
+                displayImage(i,itemRef);
+            });
+          }).catch((error) => {
+            // Uh-oh, an error occurred!
+          });
+          
+
+
+
+     }
+        window.onload = onCreated;
+        
+      async function displayImage(row,image){
+        getDownloadURL(image).then(function(url){
+           console.log(url);
+           let new_html = '';
+           new_html+= '<img src="'+url+'">'
+           if(row%3 ===0){
+             $('#col1').append(new_html);
+           }
+           if(row%3 ===1){
+            $('#col2').append(new_html);
+           }
+           if(row%3 ===2){
+            $('#col3').append(new_html);
+           }
+        })
+      }
+</script>
 
 </body>
 </html>
